@@ -1,11 +1,11 @@
 # to-do-list
 
-## Project setup
+## Step 1 Project setup
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Step 2 Compiles and hot-reloads for development
 ```
 npm run serve
 ```
