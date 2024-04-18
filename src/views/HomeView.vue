@@ -1,18 +1,38 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HelloWorld msg="To Do List" />
+    <TodoFilter :filter="filter" @changeFilter="updateFilter" />
+    <TodoInput />
+    <TodoList :todos="filteredTodos" />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import HelloWorld from "@/components/HelloWorld.vue";
+import TodoInput from "@/components/TodoInput.vue";
+import TodoFilter from "@/components/TodoFilter.vue";
+import TodoList from "@/components/TodoList.vue";
+import { computed } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
-  name: 'HomeView',
+  name: "Component",
   components: {
-    HelloWorld
+    HelloWorld,
+    TodoInput,
+    TodoFilter,
+    TodoList,
+  },
+  setup() {
+    const store = useStore();
+    const filter = computed(() => store.state.filter);
+    const filteredTodos = computed(() => store.getters.filteredTodos);
+
+    function updateFilter(newFilter) {
+      store.dispatch('updateFilter', newFilter);
+    }
+
+    return { filter, filteredTodos, updateFilter };
   }
-}
+};
 </script>
