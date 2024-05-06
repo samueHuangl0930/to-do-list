@@ -33,7 +33,7 @@ export default createStore({
   },
   actions: {
     updateFilter({ commit }, newFilter) {
-      commit("setFilter", newFilter);
+      commit("setVisibilityFilter", newFilter);
     },
     addTodoAsync({ commit }, newTodo) {
       setTimeout(() => {
