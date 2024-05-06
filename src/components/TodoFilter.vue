@@ -1,18 +1,22 @@
 <template>
   <div class="filter">
     <div class="filter-item" @click="setVisibilityFilter('all')">全部</div>
-    <div class="filter-item" @click="setVisibilityFilter('completed')">完成</div>
-    <div class="filter-item" @click="setVisibilityFilter('incomplete')">未完成</div>
+    <div class="filter-item" @click="setVisibilityFilter('completed')">
+      完成
+    </div>
+    <div class="filter-item" @click="setVisibilityFilter('incomplete')">
+      未完成
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   methods: {
-    setVisibilityFilter(filter) {
-      this.$store.commit('setVisibilityFilter', filter);
-    }
-  }
+    setVisibilityFilter(newFilter) {
+      this.$store.dispatch("updateFilter", newFilter);
+    },
+  },
 };
 </script>
 <style scoped>
@@ -34,6 +38,5 @@ export default {
 }
 .filter-item:hover {
   background: #244d9a;
- 
 }
 </style>

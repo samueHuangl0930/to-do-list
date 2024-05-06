@@ -5,9 +5,14 @@
         <span>{{ todo.text }}</span>
         <div class="event">
           <button @click="editTodo(todo)">編輯</button>
-          <button @click="toggleTodoStatus(todo)"
-            :class="{ 'cancel-button': todo.completed,'completed-button':  !todo.completed && filter !== 'incomplete' }">
-            {{ todo.completed && filter !== 'incomplete' ? '取消' : '完成' }}
+          <button
+            @click="toggleTodoStatus(todo)"
+            :class="{
+              'cancel-button': todo.completed,
+              'completed-button': !todo.completed,
+            }"
+          >
+            {{ todo.completed ? "取消" : "完成" }}
           </button>
           <button @click="deleteTodo(todo)">刪除</button>
         </div>
@@ -20,27 +25,21 @@
 export default {
   computed: {
     filteredTodos() {
-      if (this.$store.state.filter === "completed") {
-        return this.$store.state.todos.filter((todo) => todo.completed);
-      } else if (this.$store.state.filter === "incomplete") {
-        return this.$store.state.todos.filter((todo) => !todo.completed);
-      } else {
-        return this.$store.state.todos;
-      }
+      return this.$store.getters.filteredTodos;
     },
   },
   methods: {
     editTodo(todo) {
       const editedText = prompt("請輸入新的代辦事項：", todo.text);
       if (editedText !== null) {
-        this.$store.commit("editTodo", { ...todo, text: editedText });
+        this.$store.dispatch("editTodo", { ...todo, text: editedText });
       }
     },
     toggleTodoStatus(todo) {
-      this.$store.commit("toggleTodoStatus", todo.id);
+      this.$store.dispatch("toggleTodoStatus", todo.id);
     },
     deleteTodo(todo) {
-      this.$store.commit("deleteTodo", todo.id);
+      this.$store.dispatch("deleteTodo", todo.id);
     },
   },
 };
@@ -82,8 +81,8 @@ button {
   background-color: rgba(61, 248, 61, 0.884);
 }
 
-.cancel-button{
-  background-color:rgba(156, 156, 156, 0.811);
+.cancel-button {
+  background-color: rgba(156, 156, 156, 0.811);
 }
 
 .event button:nth-child(3) {
